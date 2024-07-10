@@ -11,8 +11,8 @@
 		C31410562C3DAEBE002E56B8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31410552C3DAEBE002E56B8 /* ContentView.swift */; };
 		C31410582C3DAEBF002E56B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31410572C3DAEBF002E56B8 /* Assets.xcassets */; };
 		C314105B2C3DAEBF002E56B8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C314105A2C3DAEBF002E56B8 /* Preview Assets.xcassets */; };
-		C314105D2C3DAEBF002E56B8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314105C2C3DAEBF002E56B8 /* Persistence.swift */; };
 		C31410602C3DAEBF002E56B8 /* CoreDataWorkout.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C314105E2C3DAEBF002E56B8 /* CoreDataWorkout.xcdatamodeld */; };
+		C31410822C3DBA6E002E56B8 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31410812C3DBA6E002E56B8 /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,8 +21,8 @@
 		C31410552C3DAEBE002E56B8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C31410572C3DAEBF002E56B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C314105A2C3DAEBF002E56B8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		C314105C2C3DAEBF002E56B8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		C314105F2C3DAEBF002E56B8 /* CoreDataWorkout.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataWorkout.xcdatamodel; sourceTree = "<group>"; };
+		C31410812C3DBA6E002E56B8 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,12 +55,12 @@
 		C31410522C3DAEBE002E56B8 /* CoreDataWorkout */ = {
 			isa = PBXGroup;
 			children = (
-				C31410532C3DAEBE002E56B8 /* CoreDataWorkoutApp.swift */,
-				C31410552C3DAEBE002E56B8 /* ContentView.swift */,
 				C31410572C3DAEBF002E56B8 /* Assets.xcassets */,
-				C314105C2C3DAEBF002E56B8 /* Persistence.swift */,
-				C314105E2C3DAEBF002E56B8 /* CoreDataWorkout.xcdatamodeld */,
+				C31410842C3DBAA4002E56B8 /* CoreData */,
+				C31410532C3DAEBE002E56B8 /* CoreDataWorkoutApp.swift */,
+				C31410832C3DBA74002E56B8 /* Managers */,
 				C31410592C3DAEBF002E56B8 /* Preview Content */,
+				C31410772C3DB5E7002E56B8 /* Views */,
 			);
 			path = CoreDataWorkout;
 			sourceTree = "<group>";
@@ -71,6 +71,30 @@
 				C314105A2C3DAEBF002E56B8 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C31410772C3DB5E7002E56B8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C31410552C3DAEBE002E56B8 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C31410832C3DBA74002E56B8 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				C31410812C3DBA6E002E56B8 /* DataController.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		C31410842C3DBAA4002E56B8 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				C314105E2C3DAEBF002E56B8 /* CoreDataWorkout.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,10 +167,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C314105D2C3DAEBF002E56B8 /* Persistence.swift in Sources */,
 				C31410562C3DAEBE002E56B8 /* ContentView.swift in Sources */,
 				C31410602C3DAEBF002E56B8 /* CoreDataWorkout.xcdatamodeld in Sources */,
 				C31410542C3DAEBE002E56B8 /* CoreDataWorkoutApp.swift in Sources */,
+				C31410822C3DBA6E002E56B8 /* DataController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
