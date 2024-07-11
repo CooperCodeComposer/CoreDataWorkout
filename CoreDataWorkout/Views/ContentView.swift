@@ -16,8 +16,7 @@ struct ContentView: View {
         entity: Song.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Song.dateRecorded, ascending: false)],
         predicate: NSPredicate(format: "user.username == %@", "MusicLover123")
-    ) 
-    var songs: FetchedResults<Song>
+    ) var songs: FetchedResults<Song>
 
     @State private var isUpdating = false
 
@@ -43,9 +42,16 @@ struct ContentView: View {
                             }
                             Button(action: {
                                 isUpdating = true
+                                
+                                // Example on main thread
                                 DataController.shared.deleteAllSongsAndUsers {
                                     isUpdating = false
                                 }
+                                
+                                // Example using background thread
+//                                DataController.shared.deleteAllSongsUsingBackground {
+//                                    isUpdating = false
+//                                }
                             }) {
                                 Label("Delete All", systemImage: "trash")
                             }
@@ -64,8 +70,6 @@ struct ContentView: View {
             }
         }
     }
-        
-            
 
     // MARK: - adding Song to test Core Data functionality
     

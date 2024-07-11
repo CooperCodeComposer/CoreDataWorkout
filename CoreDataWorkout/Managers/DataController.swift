@@ -20,20 +20,12 @@ class DataController: ObservableObject {
             }
         }
         persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
+        // important in avoiding crashes due to merges from background contexts
+        persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 
     var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
-    }
-    
-    @objc 
-    private func contextDidSaveContext(_ notification: Notification) {
-        let context = notification.object as! NSManagedObjectContext
-        if context !== viewContext {
-            viewContext.perform {
-                self.viewContext.mergeChanges(fromContextDidSave: notification)
-            }
-        }
     }
 
     func saveContext() {
@@ -50,10 +42,9 @@ class DataController: ObservableObject {
 
     func newBackgroundContext() -> NSManagedObjectContext {
         let context = persistentContainer.newBackgroundContext()
-        context.automaticallyMergesChangesFromParent = true
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy // Handle conflicts
         return context
     }
-            
 
     func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) {
         persistentContainer.performBackgroundTask(block)
@@ -126,11 +117,41 @@ extension DataController {
             ]
 
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [viewContext])
-            saveContext()
+            
+            // saveContext() is not necessary here because it's a batch delete
             completion()
         } catch {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+}
+
+extension DataController {
+    // Example of using a background thread
+    func deleteAllSongsUsingBackground(completion: @escaping () -> Void) {
+        let backgroundContext = newBackgroundContext()
+        
+        // perform is thread safe and runs on the same thread as the context it's on
+        backgroundContext.perform {
+            let fetchRequestSongs: NSFetchRequest<NSFetchRequestResult> = Song.fetchRequest()
+            let deleteRequestSongs = NSBatchDeleteRequest(fetchRequest: fetchRequestSongs)
+            deleteRequestSongs.resultType = .resultTypeObjectIDs
+
+            do {
+                let resultSongs = try backgroundContext.execute(deleteRequestSongs) as! NSBatchDeleteResult
+                let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: resultSongs.result as! [NSManagedObjectID]]
+
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self.viewContext])
+                
+                // Notify the main context to update the UI
+                DispatchQueue.main.async {
+                    completion()
+                }
+            } catch {
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
         }
     }
 }
